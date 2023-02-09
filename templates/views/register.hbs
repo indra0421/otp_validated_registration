@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Responsive Registration Form</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Visitor Registration</h1>
+        <form action="/register" method="POST">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" required>
+            <br>
+            <label for="company">Company/Organization:</label>
+            <input type="text" id="company" name="company" required>
+            <br>
+            <label for="purpose">Purpose of Visit:</label>
+            <input type="text" id="purpose" name="purpose" required>
+            <br>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="text" id="mobile" name="mobile" placeholder="with country code(ex- '+917452075485')" required
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'with country code(+917452075485)'">
+
+            <button class="send_btn" id="sendbtn">send</button>
+
+            <br>
+
+            <br>
+
+            <div id="otp-section">
+                <label for="otp">OTP:</label>
+                <input type="text" id="otp" name="otp" placeholder="enter your 6 digit otp here" required
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'enter your 6 digit otp here'">
+
+                <button type="button" id="verify-otp" style="cursor: pointer;">Verify OTP</button>
+            </div>
+
+            <br>
+            <div class="button">
+                <input type="submit" value="Register" id="reg_submit">
+            </div>
+            <br>
+        </form>
+    </div>
+    <script>
+
+        //for sending otp
+        document.getElementById("sendbtn").addEventListener("click", function () {
+            document.getElementById("sendbtn").innerHTML = "sent";
+            const userMobile = document.getElementById("mobile").value;
+
+            fetch(`http://localhost:4500/send/${userMobile}`)
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+        })
+
+        //for verifying otp 
+        document.getElementById("verify-otp").addEventListener("click", function () {
+
+
+            const userOtp = document.getElementById("otp").value;
+
+            const userMobile = document.getElementById("mobile").value;
+
+            fetch(`http://localhost:4500/verify/${userOtp}/${userMobile}`)
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data.val);
+                    //if the entered otp is corret then changing 'verify' -> 'verified' msg
+                    if (data.val === 'approved') {
+                        document.getElementById("verify-otp").innerHTML = "verified";
+
+                    }else {
+                        alert("you have entered wrong otp");
+                    }
+                    
+                    //checking all fields are filled properly
+                    if(data.val === 'approved'){
+                        document.getElementById("reg_submit").type = "submit";
+                    }else{
+                        alert("please fill all details");
+                    }
+                })
+                .catch(error => console.error(error));
+
+
+
+            
+        })
+
+
+
+    </script>
+</body>
+
+</html>
