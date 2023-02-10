@@ -111,14 +111,7 @@ app.post("/register", async (req, res) => {
                 
                 
             })
-            .then(message => {
-                // console.log(`SMS sent to ${mobileNumber} with message SID ${message.sid}`);
-                // res.send('Form submitted successfully. Please check your mobile for the confirmation token.');
-                res.render("submit", {
-                    mob: req.body.mobile,
-                    msgsid: message.sid
-                });
-            })
+            .then(message => console.log(message))
             .catch(err => {
                 console.error(err);
                 res.status(500).send('Error sending SMS message');

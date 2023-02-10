@@ -22,12 +22,12 @@ const employeeSchema = new mongoose.Schema({
     mobile: {
         type: Number,
         unique: true,
-        // validate: {
-        //     validator: function (v) {
-        //         return /^\d{2}\d{10}$/.test(v);
-        //     },
-        //     message: props => `${props.value} is not a valid phone number!`
-        // },
+        validate: {
+            validator: function (v) {
+                return /^\d{2}\d{10}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid phone number!`
+        },
         required: [true, 'User phone number required']
 },
     
