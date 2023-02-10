@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/Registration", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+const url = "mongodb+srv://my_reg:7fzH0uyBM5fpkIzf@atlascluster.av8qw1n.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(url)
     .then(() => {
         console.log("connection successful with mongodb....");
     })
