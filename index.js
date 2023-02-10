@@ -86,11 +86,12 @@ app.post("/register", async (req, res) => {
     try {
         // const mob = `+${req.body.mobile}`;
         const currentTime = new Date().toLocaleString();
+        const timeStr = currentTime;
         const registerEmployees = new Register({
             fullname: req.body.fullname,
             company: req.body.company,
             purpose: req.body.purpose,
-            entry: currentTime,
+            entry: timeStr,
             mobile: req.body.mobile
         })
         const registeredData = await registerEmployees.save();

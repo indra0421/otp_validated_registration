@@ -16,7 +16,7 @@ const employeeSchema = new mongoose.Schema({
         required: true
     },
     entry:{
-        type: Date,
+        type: string
 
     },
     mobile: {
