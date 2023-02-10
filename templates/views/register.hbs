@@ -54,7 +54,7 @@
             document.getElementById("sendbtn").innerHTML = "sent";
             const userMobile = document.getElementById("mobile").value;
 
-            fetch(`http://localhost:4500/send/${userMobile}`)
+            fetch(`https://otpvalidatedregistration-production.up.railway.app/send/${userMobile}`)
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(error => console.error(error));
@@ -68,7 +68,7 @@
 
             const userMobile = document.getElementById("mobile").value;
 
-            fetch(`http://localhost:4500/verify/${userOtp}/${userMobile}`)
+            fetch(`https://otpvalidatedregistration-production.up.railway.app/verify/${userOtp}/${userMobile}`)
                 .then(response => response.json())
                 .then((data) => {
                     console.log(data.val);
