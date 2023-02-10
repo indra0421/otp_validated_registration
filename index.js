@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const config = require("./config");
+require('dotenv').config();
 
-const client = require("twilio")(config.accountSid, config.authToken);
+const client = require("twilio")(process.env.accountSid, process.env.authToken);
 
 //to see the form data in browser and getting the form data we have to use
 app.use(express.json());
@@ -43,7 +43,7 @@ app.get('/send/:mobile', (req, res) => {
 
     client
         .verify.v2
-        .services(config.verifySid)
+        .services(process.env.verifySid)
         .verifications
         .create({
             to: `+${mob}`,
@@ -66,7 +66,7 @@ app.get('/verify/:userOtp/:mobile', (req, res) => {
 
     client
         .verify
-        .services(config.verifySid)
+        .services(process.env.verifySid)
         .verificationChecks
         .create({
             to: `+${mob}`,
