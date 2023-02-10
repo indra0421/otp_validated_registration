@@ -28,6 +28,10 @@ app.set("view engine", "hbs");
 app.set('views', template_path);
 hbs.registerPartials(partial_path);
 
+app.get("/",(req,res) => {
+    res.render("home");
+})
+
 app.get("/register", (req, res) => {
     res.render("register");
 
@@ -80,6 +84,7 @@ app.get('/verify/:userOtp/:mobile', (req, res) => {
 
 app.post("/register", async (req, res) => {
     try {
+        // const mob = `+${req.body.mobile}`;
         const currentTime = new Date().toLocaleString();
         const registerEmployees = new Register({
             fullname: req.body.fullname,
@@ -98,9 +103,13 @@ app.post("/register", async (req, res) => {
 
         client.messages
             .create({
-                to: req.body.mobile,
-                from: config.twilioPhoneNumber,
-                body: `Your confirmation token is: ${token}`
+                body: `Your confirmation token is: ${token}`,
+                from: '+15733076712',
+                //only for verified members set in the twilio service
+                //to add number , first add to twilio Verified Caller IDs
+                to: `+${req.body.mobile}`,
+                
+                
             })
             .then(message => {
                 // console.log(`SMS sent to ${mobileNumber} with message SID ${message.sid}`);
@@ -113,7 +122,8 @@ app.post("/register", async (req, res) => {
             .catch(err => {
                 console.error(err);
                 res.status(500).send('Error sending SMS message');
-            });
+            })
+            
 
 
     } catch (e) {
